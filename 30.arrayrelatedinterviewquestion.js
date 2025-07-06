@@ -162,4 +162,114 @@ stud.sort((a,b) => {
    return a.age - b.age
 })
 
-console.log(stud)
+
+// console.log(stud)
+
+
+// performance testing using sequentual and parallel processing
+const numbers5 = [1,2,3,4,5]
+async function processSequentially(items){
+    const results = []
+   for(let item of items)
+   {
+     const result = await new Promise((resolve, reject) => {
+        setTimeout(() => resolve(item), 1000)
+     })
+     results.push(result)
+   }
+   console.log('seq', results)
+}
+
+
+ async function processparallel(items){
+    const results = []
+   for(let item of items)
+   {
+     const result = new Promise((resolve, reject) => {
+        setTimeout(() => resolve(item), 1000)
+     })
+     results.push(result)
+   }
+
+   let res =  await Promise.all(results)
+   console.log('parallel', res)
+}
+
+// processSequentially(numbers)
+// processparallel(numbers)
+
+
+// shallow copy and deep copy
+
+const original = [
+        { id: 1, name:'John', address: {city : 'new york', zip : '10001'}},    
+        { id: 2, name: 'Jahn'}
+]
+
+// const shallowCopy = [...original]
+
+// shallowCopy[0].city = 'Boston'
+
+// console.log('shallowCopy', shallowCopy)
+// console.log('original', original)
+
+const deepCopy = JSON.parse(JSON.stringify(original))
+
+deepCopy[0].city = 'Boston'
+
+//  console.log('deepCopy', deepCopy)
+//  console.log('original', original)
+
+
+// intersection and union
+let test1 = [1,2,3]
+let test2 = [2,3,4]
+
+//intersection
+let result5 = test1.filter((n) => test2.includes(n))
+// console.log('result5', result5)
+
+//union
+let result6 = [...new Set([...test1, ...test2]) ]
+// console.log('result6', result6)
+
+
+// Lazy evaluation with generator
+function* lazyFilter(array, predicate)
+{
+   for(const item of array)
+   {
+      if(predicate(item))
+      {
+           yield item
+      }
+   }
+}
+
+function getEvenSquare(number)
+{
+   const evenNumber = lazyFilter(number, n => n%2 == 0)
+   return evenNumber;
+}
+
+const largeArray = Array.from({length: 30}, (_,i) => i+1)
+//console.log(getEvenSquare(largeArray))
+
+for(let item of getEvenSquare(largeArray))
+{
+// console.log('item', item)
+}
+
+
+const lexical = {
+        count : 0,
+        increment : function(){
+                setTimeout(() => {
+                        this.count++
+                        console.log(this.count)
+                }, 1000);
+        }
+}
+
+lexical.increment()
+
