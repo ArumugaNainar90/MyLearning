@@ -227,11 +227,11 @@ let test2 = [2,3,4]
 
 //intersection
 let result5 = test1.filter((n) => test2.includes(n))
-// console.log('result5', result5)
+ console.log('result5', result5)
 
 //union
 let result6 = [...new Set([...test1, ...test2]) ]
-// console.log('result6', result6)
+ console.log('result6', result6)
 
 
 // Lazy evaluation with generator
